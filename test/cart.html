@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>سلة المشتريات</title>
+  <style>
+    body {
+      font-family: Arial;
+      background-color: #f7f7f7;
+      padding: 20px;
+      text-align: center;
+    }
+    .cart-item {
+      background-color: white;
+      border: 1px solid #ddd;
+      margin: 10px auto;
+      padding: 15px;
+      width: 300px;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    button {
+      background-color: #dc3545;
+      color: white;
+      padding: 8px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    .total {
+      margin-top: 20px;
+      font-size: 20px;
+      font-weight: bold;
+    }
+    .checkout {
+      background-color: #28a745;
+      margin-top: 20px;
+      padding: 10px 20px;
+    }
+    a {
+      display: inline-block;
+      margin-top: 20px;
+      text-decoration: none;
+      background-color: #007bff;
+      color: white;
+      padding: 10px;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🛒 سلة المشتريات</h1>
+
+  <div id="cart-container"></div>
+  <div class="total" id="total"></div>
+  <button class="checkout" onclick="checkout()">إتمام الطلب</button>
+  <br>
+  <a href="index.html">⬅️ الرجوع إلى المتجر</a>
+
+  <script>
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const cartContainer = document.getElementById('cart-container');
+    const totalDiv = document.getElementById('total');
+
+    function showCart() {
+      cartContainer.innerHTML = '';
+      let total = 0;
+
+      if (cart.length === 0) {
+        cartContainer.innerHTML = '<p>السلة فارغة</p>';
+        totalDiv.textContent = '';
+        return;
+      }
+
+      cart.forEach((item, index) => {
+        total += item.price;
+
+        const div = document.createElement('div');
+        div.className = 'cart-item';
+        div.innerHTML = `
+          <h3>${item.name}</h3>
+          <p>${item.price} ريال</p>
+          <button onclick="removeItem(${index})">حذف</button>
+        `;
+        cartContainer.appendChild(div);
+      });
+
+      totalDiv.textContent = `الإجمالي: ${total} ريال`;
+    }
+
+    function removeItem(index) {
+      cart.splice(index, 1);
+      localStorage.setItem('cart', JSON.stringify(cart));
+      showCart();
+    }
+
+    function checkout() {
+      if (cart.length === 0) {
+        alert("السلة فارغة!");
+      } else {
+        alert("تم إتمام الطلب بنجاح ✅");
+        cart = [];
+        localStorage.setItem('cart', JSON.stringify(cart));
+        showCart();
+      }
+    }
+
+    showCart();
+  </script>
+
+</body>
+</html>

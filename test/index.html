@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>المتجر</title>
+  <style>
+    body {
+      font-family: Arial;
+      background-color: #f2f2f2;
+      padding: 20px;
+      text-align: center;
+    }
+    .products {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .product {
+      background-color: white;
+      padding: 15px;
+      border-radius: 10px;
+      width: 200px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    button {
+      background-color: #28a745;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+    .top-bar {
+      text-align: right;
+      margin-bottom: 20px;
+    }
+    .top-bar a {
+      text-decoration: none;
+      background-color: #007bff;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="top-bar">
+    <a href="cart.html">عرض السلة 🛒</a>
+  </div>
+
+  <h1>🛍️ مرحبًا بك في المتجر</h1>
+
+  <div class="products">
+    <div class="product">
+      <h3>ساعة ذكية</h3>
+      <p>150 ريال</p>
+      <button onclick="addToCart('ساعة ذكية', 150)">أضف إلى السلة</button>
+    </div>
+    <div class="product">
+      <h3>سماعة بلوتوث</h3>
+      <p>90 ريال</p>
+      <button onclick="addToCart('سماعة بلوتوث', 90)">أضف إلى السلة</button>
+    </div>
+    <div class="product">
+      <h3>كيبورد ألعاب</h3>
+      <p>120 ريال</p>
+      <button onclick="addToCart('كيبورد ألعاب', 120)">أضف إلى السلة</button>
+    </div>
+  </div>
+
+  <script>
+    function addToCart(name, price) {
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      cart.push({ name, price });
+      localStorage.setItem('cart', JSON.stringify(cart));
+      alert("تمت إضافة المنتج إلى السلة");
+    }
+  </script>
+
+</body>
+</html>
